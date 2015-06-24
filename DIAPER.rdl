@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+  <Description>Dynamic Index Analysis Performance Evaluation Report</Description>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="DBAPerf_Reports">
@@ -7,6 +8,7 @@
       <ConnectionProperties>
         <DataProvider>SQL</DataProvider>
         <ConnectString>Data Source=SEAPDBASQL01;Initial Catalog=DBAperf_reports</ConnectString>
+        <Prompt>Enter a user name and password to access the data source:</Prompt>
       </ConnectionProperties>
       <rd:SecurityType>DataBase</rd:SecurityType>
       <rd:DataSourceID>0cc3739f-19e3-4d80-ae08-474d6d6f1055</rd:DataSourceID>
@@ -73,7 +75,7 @@ WHERE		[ServerName] = @ServerName</CommandText>
 		,[finding]
 		,[URL]
 		,[details]
-		,CAST(REPLACE(DBAADMIN.DBO.DBAUDF_ReturnPart(replace([details],' estimated benefit: ','|'),2),',','') AS BIGINT) [Benefit]
+		,CAST(REPLACE(DBAADMIN.DBO.DBAUDF_ReturnPart(replace(REPLACE([details],'|PARENT',';PARENT'),' estimated benefit: ','|'),2),',','') AS BIGINT) [Benefit]
 		,[index_definition]
 		,[secret_columns]
 		,[index_usage_summary]
@@ -523,9 +525,9 @@ ORDER BY	rundate desc</CommandText>
             </Paragraphs>
             <rd:WatermarkTextbox>Title</rd:WatermarkTextbox>
             <rd:DefaultName>ReportTitle</rd:DefaultName>
-            <Left>0.03125in</Left>
+            <Left>1.25597in</Left>
             <Height>0.4in</Height>
-            <Width>11.58111in</Width>
+            <Width>10.38764in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -576,7 +578,7 @@ ORDER BY	rundate desc</CommandText>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.1875in</Height>
+                  <Height>0.30208in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -587,7 +589,7 @@ ORDER BY	rundate desc</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>Click titles below to see more detailed descriptions and tips for resolutions.</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -4524,9 +4526,9 @@ ORDER BY	rundate desc</CommandText>
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>ReportData</DataSetName>
-            <Top>0.83903in</Top>
-            <Height>2.42188in</Height>
-            <Width>11.58111in</Width>
+            <Top>1.03889in</Top>
+            <Height>2.53643in</Height>
+            <Width>11.58109in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -4551,10 +4553,10 @@ ORDER BY	rundate desc</CommandText>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox432</rd:DefaultName>
-            <Top>0.51958in</Top>
-            <Left>0.03125in</Left>
+            <Top>0.46944in</Top>
+            <Left>1.25597in</Left>
             <Height>0.25in</Height>
-            <Width>11.58111in</Width>
+            <Width>10.38764in</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -4567,15 +4569,29 @@ ORDER BY	rundate desc</CommandText>
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Image Name="Image1">
+            <Source>Embedded</Source>
+            <Value>download</Value>
+            <Sizing>FitProportional</Sizing>
+            <Left>0.15625in</Left>
+            <Height>0.96944in</Height>
+            <Width>1.03028in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Image>
         </ReportItems>
-        <Height>3.2609in</Height>
+        <Height>3.57532in</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>11.61236in</Width>
+      <Width>11.64361in</Width>
       <Page>
         <PageFooter>
           <Height>0.53333in</Height>
@@ -4636,6 +4652,15 @@ ORDER BY	rundate desc</CommandText>
       </ValidValues>
     </ReportParameter>
   </ReportParameters>
+  <EmbeddedImages>
+    <EmbeddedImage Name="download">
+      <MIMEType>image/jpeg</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>d10d92ee-52ed-4e4f-9abb-ba25a5274628</rd:ReportID>
 </Report>
